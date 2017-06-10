@@ -32,8 +32,28 @@ CREATE TABLE igtfs_routes
   CONSTRAINT igtfs_routes_pkey PRIMARY KEY (r_id)
 );
 
+CREATE TABLE igtfs_stops
+(
+  s_id           INTEGER NOT NULL,
+  code           INTEGER NOT NULL,
+  name           CHARACTER VARYING(255),
+  s_desc         CHARACTER VARYING(255),
+  location_type  BOOLEAN,
+  parent_station INTEGER,
+  zone_id        CHARACTER VARYING(255),
+  address        CHARACTER VARYING(50),
+  town           CHARACTER VARYING(50),
+  active_from    DATE    NOT NULL REFERENCES igtfs_files (file_date),
+  active_until   DATE REFERENCES igtfs_files (file_date),
+  CONSTRAINT igtfs_stops_pkey PRIMARY KEY (s_id)
+);
+
+
+SELECT AddGeometryColumn ('igtfs_stops','point',4326,'POINT',2);
+
+
 CREATE TABLE tmp_ids
 (
-  r_id    INTEGER NOT NULL,
+  r_id INTEGER NOT NULL,
   CONSTRAINT tmp_ids_pkey PRIMARY KEY (r_id)
 );
